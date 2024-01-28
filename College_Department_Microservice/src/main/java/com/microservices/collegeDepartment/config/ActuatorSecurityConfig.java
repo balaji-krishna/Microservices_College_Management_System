@@ -2,6 +2,7 @@ package com.microservices.collegeDepartment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,8 +16,12 @@ public class ActuatorSecurityConfig {
  		http
  			.authorizeHttpRequests((authorizeHttpRequests) ->
  				authorizeHttpRequests
- 					.requestMatchers("/**").hasRole("ADMIN")
- 			)
+ 					.requestMatchers(HttpMethod.GET ,"/department/**").permitAll()
+					.requestMatchers(HttpMethod.POST ,"/department/**").permitAll()
+					.requestMatchers(HttpMethod.PUT ,"/department/**").permitAll()
+					.requestMatchers(HttpMethod.DELETE ,"/department/**").permitAll()
+ 					.requestMatchers("/actuator/**").hasRole("ADMIN")
+ 			).csrf().disable()
  			.formLogin();
  		return http.build();
  	}
