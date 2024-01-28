@@ -20,3 +20,24 @@ spring:
             lb://STUDENT-MICROSERVICE
           predicates:
           - Path=/student/**
+  security:
+    user:
+      name: admin
+      password: admin123
+      roles:
+      - ADMIN
+          
+management:
+  endpoint:
+    health:
+      show-details: always
+      
+    env:
+      show-values: always
+      
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+        
