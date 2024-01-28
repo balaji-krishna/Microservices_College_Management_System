@@ -1,0 +1,22 @@
+server:
+  port: 9090
+  
+spring:
+  application:
+    name: API-GATEWAY-MICROSERVICE
+    
+  cloud:
+    gateway:
+      mvc:
+        routes:
+        - id: COLLEGE-DEPARTMENT-MICROSERVICE
+          uri:
+            lb://COLLEGE-DEPARTMENT-MICROSERVICE
+          predicates:
+          - Path=/department/**
+          
+        - id: STUDENT-MICROSERVICE
+          uri:
+            lb://STUDENT-MICROSERVICE
+          predicates:
+          - Path=/student/**
