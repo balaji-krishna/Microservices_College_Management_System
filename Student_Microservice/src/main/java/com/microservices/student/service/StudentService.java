@@ -1,17 +1,20 @@
 package com.microservices.student.service;
 
-import java.util.List;
-
 import com.microservices.student.entity.Student;
+import com.microservices.student.httpData.StudentResponseBody;
 
 public interface StudentService {
 
-	Student getStudentById(int id);
+	StudentResponseBody getStudentById(int id) throws Exception;
 
-	List<Student> getAllStudentsInfo();
+	StudentResponseBody getAllStudentsInfo() throws Exception;
 
-	Student saveStudent(Student student);
+	StudentResponseBody saveStudent(Student student) throws Exception;
 
-	List<Student> getStudentByDepartmentId(int id);
+	StudentResponseBody getStudentByDepartmentId(int id) throws Exception;
+
+	StudentResponseBody updateStudent(Student student) throws Exception;
+
+	StudentResponseBody deleteStudentById(int id) throws Exception;
 
 }
