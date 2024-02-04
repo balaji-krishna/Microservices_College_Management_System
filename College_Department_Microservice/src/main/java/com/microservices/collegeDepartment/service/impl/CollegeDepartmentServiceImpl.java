@@ -1,17 +1,19 @@
 package com.microservices.collegeDepartment.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.microservices.collegeDepartment.entity.CollegeDepartment;
+import com.microservices.collegeDepartment.exception.BusinessException;
+import com.microservices.collegeDepartment.httpData.CollegeDepartmentResponse;
+import com.microservices.collegeDepartment.httpData.StudentResponseBody;
 import com.microservices.collegeDepartment.model.ResponseBodyEntity;
-import com.microservices.collegeDepartment.model.Student;
 import com.microservices.collegeDepartment.repository.CollegeDepartmentRepository;
 import com.microservices.collegeDepartment.service.CollegeDepartmentService;
 
@@ -23,79 +25,138 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 
 	@Autowired
 	private CollegeDepartmentRepository collegeDepartmentRepository;
-	
+
 	public static final Logger LOGGER = LoggerFactory.getLogger(CollegeDepartmentServiceImpl.class);
-	
+
 	public static final String COLLEGE_DEPT_SERVICE = "collegeDeptService";
-	
+
 	public static final String STUDENT_MICROSERVICE_BASE_URL = "http://STUDENT-MICROSERVICE/student/";
 
 	@Autowired
 	private RestTemplate restTemplate;
 
 	@Override
-	public CollegeDepartment saveDepartment(CollegeDepartment collegeDepartment) {
-		return collegeDepartmentRepository.save(collegeDepartment);
+	public ResponseBodyEntity saveDepartment(CollegeDepartment collegeDepartment) throws Exception {
+		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
+		if (collegeDepartmentRepository.existsById(collegeDepartment.getDepartmentId())) {
+			throw new BusinessException("Department Id already exists!!");
+		}
+		collegeDepartmentResponse.setCollegeDepartment(collegeDepartmentRepository.save(collegeDepartment));
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		return responseBodyEntity;
 	}
 
 	@Override
 	@CircuitBreaker(name = COLLEGE_DEPT_SERVICE, fallbackMethod = "getDepartmentByIdFallback")
-	@Retry(name = COLLEGE_DEPT_SERVICE, fallbackMethod = "getDepartmentByIdFallback")
-	public ResponseBodyEntity getDepartmentById(int id) {
+	public ResponseBodyEntity getDepartmentById(int id) throws Exception {
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
-		List<Student> students = new ArrayList<Student>();
-		CollegeDepartment collegeDepartment = collegeDepartmentRepository.findById(id).get();
-
+		StudentResponseBody studentResponseBody = new StudentResponseBody();
+		if (!collegeDepartmentRepository.existsById(id)) {
+			throw new BusinessException("College Id does not exists!!");
+		}
+		collegeDepartmentResponse.setCollegeDepartment(collegeDepartmentRepository.findById(id).get());
 		LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
-		students = restTemplate.getForObject(STUDENT_MICROSERVICE_BASE_URL + "getStudentByDepartmentId/" + id,
-				List.class);
-
-		responseBodyEntity.setCollegeDepartment(collegeDepartment);
-		responseBodyEntity.setStudents(students);
+		studentResponseBody = restTemplate.getForObject(
+				STUDENT_MICROSERVICE_BASE_URL + "getStudentByDepartmentId/" + id, StudentResponseBody.class);
+		if (studentResponseBody != null && studentResponseBody.getResultCode().equals("01")
+				&& !studentResponseBody.getStudents().isEmpty()) {
+			collegeDepartmentResponse.setStudents(studentResponseBody.getStudents());
+		} else {
+			throw new BusinessException("Error in student data");
+		}
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setStudentServiceStatus("UP");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
 		return responseBodyEntity;
 	}
-	
-	public ResponseBodyEntity getDepartmentByIdFallback(int id, Exception exception) {
+
+	public ResponseBodyEntity getDepartmentByIdFallback(int id, RestClientException exception) {
 		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		CollegeDepartment collegeDepartment = collegeDepartmentRepository.findById(id).get();
 
-		responseBodyEntity.setCollegeDepartment(collegeDepartment);
+		collegeDepartmentResponse.setCollegeDepartment(collegeDepartment);
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setStudentServiceStatus("DOWN");
 		return responseBodyEntity;
 	}
 
 	@Override
 	@Retry(name = COLLEGE_DEPT_SERVICE, fallbackMethod = "getAllDepartmentsInfoFallback")
-	public List<ResponseBodyEntity> getAllDepartmentsInfo() {
-		List<ResponseBodyEntity> responseBodyEntities = new ArrayList<ResponseBodyEntity>();
+	public ResponseBodyEntity getAllDepartmentsInfo() throws Exception {		
+		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
+		StudentResponseBody studentResponseBody = new StudentResponseBody();
 		List<CollegeDepartment> collegeDepartments = collegeDepartmentRepository.findAll();
+		collegeDepartmentResponse.setCollegeDepartments(collegeDepartments);
 
-		for (CollegeDepartment collegeDepartment : collegeDepartments) {	
-			List<Student> students = new ArrayList<Student>();
-			ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
-			LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
-			students = restTemplate.getForObject(STUDENT_MICROSERVICE_BASE_URL + "getStudentByDepartmentId/"
-					+ collegeDepartment.getDepartmentId(), List.class);
-			responseBodyEntity.setStudents(students);
-			responseBodyEntity.setCollegeDepartment(collegeDepartment);
-			responseBodyEntities.add(responseBodyEntity);
-		}		
-		
-		return responseBodyEntities;
+		LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
+		studentResponseBody = restTemplate.getForObject(STUDENT_MICROSERVICE_BASE_URL + "getAllStudentsInfo",
+				StudentResponseBody.class);
+		if (studentResponseBody != null && studentResponseBody.getResultCode().equals("01") && !studentResponseBody.getStudents().isEmpty()) {
+			collegeDepartmentResponse.setStudents(studentResponseBody.getStudents());
+		} else {
+			throw new BusinessException("Error getting student details");
+		}
+
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setStudentServiceStatus("UP");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+
+		return responseBodyEntity;
 	}
-	
-	public List<ResponseBodyEntity> getAllDepartmentsInfoFallback(Exception exception) {
-		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");	
-		List<ResponseBodyEntity> responseBodyEntities = new ArrayList<ResponseBodyEntity>();
-		List<CollegeDepartment> collegeDepartments = collegeDepartmentRepository.findAll();
 
-		for (CollegeDepartment collegeDepartment : collegeDepartments) {
-			ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
-			responseBodyEntity.setCollegeDepartment(collegeDepartment);
-			responseBodyEntities.add(responseBodyEntity);
-		}		
-		
-		return responseBodyEntities;
+	public ResponseBodyEntity getAllDepartmentsInfoFallback(Exception exception) {
+		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
+		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
+		List<CollegeDepartment> collegeDepartments = collegeDepartmentRepository.findAll();
+		collegeDepartmentResponse.setCollegeDepartments(collegeDepartments);
+
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setStudentServiceStatus("DOWN");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		return responseBodyEntity;
+	}
+
+	@Override
+	public ResponseBodyEntity updateDepartment(CollegeDepartment collegeDepartment) throws Exception {
+		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
+		if (!collegeDepartmentRepository.existsById(collegeDepartment.getDepartmentId())) {
+			throw new BusinessException("Department Id does not exists!!");
+		}
+		collegeDepartmentResponse.setCollegeDepartment(collegeDepartmentRepository.save(collegeDepartment));
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		return responseBodyEntity;
+	}
+
+	@Override
+	public ResponseBodyEntity deleteDepartmentById(int id) throws Exception {
+		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
+		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
+		if (!collegeDepartmentRepository.existsById(id)) {
+			throw new BusinessException("College Id does not exists!!");
+		}
+		collegeDepartmentRepository.deleteById(id);
+		List<CollegeDepartment> collegeDepartments = collegeDepartmentRepository.findAll();
+		collegeDepartmentResponse.setCollegeDepartments(collegeDepartments);
+		responseBodyEntity.setResultCode("01");
+		responseBodyEntity.setResultMessage("Successfully completed");
+		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		return responseBodyEntity;
 	}
 
 }

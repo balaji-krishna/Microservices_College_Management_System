@@ -1,11 +1,11 @@
 package com.microservices.collegeDepartment.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +22,28 @@ public class CollegeDepartmentController {
 	private CollegeDepartmentService collegeDepartmentService;
 	
 	@GetMapping(path = "getAllDepartmentsInfo")
-	public List<ResponseBodyEntity> getAllDepartmentsInfo() {
+	public ResponseBodyEntity getAllDepartmentsInfo() throws Exception {
 		return collegeDepartmentService.getAllDepartmentsInfo();
 	}
 	
 	@GetMapping(path = "getDepartmentById/{id}")
-	public ResponseBodyEntity getDepartmentById(@PathVariable int id) {	
+	public ResponseBodyEntity getDepartmentById(@PathVariable int id) throws Exception {	
 		return collegeDepartmentService.getDepartmentById(id);
 	}
 	
 	@PostMapping(path = "saveDepartment")
-	public CollegeDepartment saveDepartment(@RequestBody CollegeDepartment collegeDepartment) {
+	public ResponseBodyEntity saveDepartment(@RequestBody CollegeDepartment collegeDepartment) throws Exception {
 		return collegeDepartmentService.saveDepartment(collegeDepartment);
+	}
+	
+	@PutMapping(path = "updateDepartment")
+	public ResponseBodyEntity updateDepartment(@RequestBody CollegeDepartment collegeDepartment) throws Exception {
+		return collegeDepartmentService.updateDepartment(collegeDepartment);
+	}
+	
+	@DeleteMapping(path = "deleteDepartmentById/{id}")
+	public ResponseBodyEntity deleteDepartmentById(@PathVariable int id) throws Exception {	
+		return collegeDepartmentService.deleteDepartmentById(id);
 	}
 
 }
