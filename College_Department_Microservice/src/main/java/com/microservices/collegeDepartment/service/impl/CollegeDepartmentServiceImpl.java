@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,6 +38,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	private RestTemplate restTemplate;
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public ResponseBodyEntity saveDepartment(CollegeDepartment collegeDepartment) throws Exception {
 		LOGGER.info("The method saveDepartment is called with id {}", collegeDepartment.getDepartmentId());
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
@@ -47,6 +50,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		if(responseBodyEntity.getResultCode().equals("01")) {
+			throw new BusinessException("Test exception"); 
+		}
 		LOGGER.info("The method saveDepartment is successfully completed");
 		return responseBodyEntity;
 	}
@@ -139,6 +145,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public ResponseBodyEntity updateDepartment(CollegeDepartment collegeDepartment) throws Exception {
 		LOGGER.info("The method updateDepartment is called with id {}", collegeDepartment.getDepartmentId());
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
@@ -150,11 +157,15 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		if(responseBodyEntity.getResultCode().equals("01")) {
+			throw new BusinessException("Test exception"); 
+		}
 		LOGGER.info("The method updateDepartment is successfully completed");
 		return responseBodyEntity;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public ResponseBodyEntity deleteDepartmentById(int id) throws Exception {
 		LOGGER.info("The method deleteDepartmentById is called with id {}", id);
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
@@ -168,6 +179,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		if(responseBodyEntity.getResultCode().equals("01")) {
+			throw new BusinessException("Test exception"); 
+		}
 		LOGGER.info("The method deleteDepartmentById is successfully completed");
 		return responseBodyEntity;
 	}

@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.microservices.student.entity.Student;
 import com.microservices.student.exception.BusinessException;
@@ -52,6 +54,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public StudentResponseBody saveStudent(Student student) throws Exception {
 		LOGGER.info("The method saveStudent is called with id {}", student.getId());
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -86,6 +89,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public StudentResponseBody updateStudent(Student student) throws Exception {
 		LOGGER.info("The method updateStudent is called with id {}", student.getId());
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -100,6 +104,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
 	public StudentResponseBody deleteStudentById(int id) throws Exception {
 		LOGGER.info("The method deleteStudentById is called with id {}", id);
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
