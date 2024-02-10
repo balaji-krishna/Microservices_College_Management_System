@@ -37,6 +37,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 
 	@Override
 	public ResponseBodyEntity saveDepartment(CollegeDepartment collegeDepartment) throws Exception {
+		LOGGER.info("The method saveDepartment is called with id {}", collegeDepartment.getDepartmentId());
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		if (collegeDepartmentRepository.existsById(collegeDepartment.getDepartmentId())) {
@@ -46,12 +47,14 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		LOGGER.info("The method saveDepartment is successfully completed");
 		return responseBodyEntity;
 	}
 
 	@Override
 	@CircuitBreaker(name = COLLEGE_DEPT_SERVICE, fallbackMethod = "getDepartmentByIdFallback")
 	public ResponseBodyEntity getDepartmentById(int id) throws Exception {
+		LOGGER.info("The method getDepartmentById is called with id {}", id);
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -72,11 +75,13 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setStudentServiceStatus("UP");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		LOGGER.info("The method getDepartmentById is successfully completed");
 		return responseBodyEntity;
 	}
 
 	public ResponseBodyEntity getDepartmentByIdFallback(int id, RestClientException exception) {
 		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
+		LOGGER.info("The method getDepartmentByIdFallback is called with id {}", id);
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		CollegeDepartment collegeDepartment = collegeDepartmentRepository.findById(id).get();
@@ -86,12 +91,14 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setStudentServiceStatus("DOWN");
+		LOGGER.info("The method getDepartmentByIdFallback is successfully completed");
 		return responseBodyEntity;
 	}
 
 	@Override
 	@Retry(name = COLLEGE_DEPT_SERVICE, fallbackMethod = "getAllDepartmentsInfoFallback")
-	public ResponseBodyEntity getAllDepartmentsInfo() throws Exception {		
+	public ResponseBodyEntity getAllDepartmentsInfo() throws Exception {	
+		LOGGER.info("The method getAllDepartmentsInfo is called");
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -111,12 +118,13 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setStudentServiceStatus("UP");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
-
+		LOGGER.info("The method getAllDepartmentsInfo is successfully completed");
 		return responseBodyEntity;
 	}
 
 	public ResponseBodyEntity getAllDepartmentsInfoFallback(Exception exception) {
 		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
+		LOGGER.info("The method getAllDepartmentsInfoFallback is called");
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		List<CollegeDepartment> collegeDepartments = collegeDepartmentRepository.findAll();
@@ -126,11 +134,13 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setStudentServiceStatus("DOWN");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		LOGGER.info("The method getAllDepartmentsInfoFallback is successfully completed");
 		return responseBodyEntity;
 	}
 
 	@Override
 	public ResponseBodyEntity updateDepartment(CollegeDepartment collegeDepartment) throws Exception {
+		LOGGER.info("The method updateDepartment is called with id {}", collegeDepartment.getDepartmentId());
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		if (!collegeDepartmentRepository.existsById(collegeDepartment.getDepartmentId())) {
@@ -140,11 +150,13 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		LOGGER.info("The method updateDepartment is successfully completed");
 		return responseBodyEntity;
 	}
 
 	@Override
 	public ResponseBodyEntity deleteDepartmentById(int id) throws Exception {
+		LOGGER.info("The method deleteDepartmentById is called with id {}", id);
 		CollegeDepartmentResponse collegeDepartmentResponse = new CollegeDepartmentResponse();
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
 		if (!collegeDepartmentRepository.existsById(id)) {
@@ -156,6 +168,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode("01");
 		responseBodyEntity.setResultMessage("Successfully completed");
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
+		LOGGER.info("The method deleteDepartmentById is successfully completed");
 		return responseBodyEntity;
 	}
 

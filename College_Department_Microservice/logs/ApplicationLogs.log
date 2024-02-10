@@ -1,0 +1,6 @@
+10-02-2024 12:32:27.651 [http-nio-9092-exec-1] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getAllDepartmentsInfo - The method getAllDepartmentsInfo is called
+10-02-2024 12:32:27.899 [http-nio-9092-exec-1] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getAllDepartmentsInfo - THE STUDENT MICROSERVICE IS CALLED
+10-02-2024 12:32:28.366 [http-nio-9092-exec-1] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getAllDepartmentsInfo - The method getAllDepartmentsInfo is successfully completed
+10-02-2024 12:32:35.292 [http-nio-9092-exec-3] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getDepartmentById - The method getDepartmentById is called with id 1
+10-02-2024 12:32:35.520 [http-nio-9092-exec-3] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getDepartmentById - THE STUDENT MICROSERVICE IS CALLED
+10-02-2024 12:32:35.624 [http-nio-9092-exec-3] INFO  c.m.c.s.i.CollegeDepartmentServiceImpl.getDepartmentById - The method getDepartmentById is successfully completed

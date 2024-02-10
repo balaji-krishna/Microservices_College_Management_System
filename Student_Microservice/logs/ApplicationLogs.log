@@ -1,0 +1,4 @@
+10-02-2024 12:32:28.174 [http-nio-9091-exec-1] INFO  c.m.s.s.impl.StudentServiceImpl.getAllStudentsInfo - The method getAllStudentsInfo is called
+10-02-2024 12:32:28.345 [http-nio-9091-exec-1] INFO  c.m.s.s.impl.StudentServiceImpl.getAllStudentsInfo - The method getAllStudentsInfo is successfully completed
+10-02-2024 12:32:35.536 [http-nio-9091-exec-2] INFO  c.m.s.s.impl.StudentServiceImpl.getStudentByDepartmentId - The method getStudentByDepartmentId is called with id 1
+10-02-2024 12:32:35.618 [http-nio-9091-exec-2] INFO  c.m.s.s.impl.StudentServiceImpl.getStudentByDepartmentId - The method getStudentByDepartmentId is successfully completed
