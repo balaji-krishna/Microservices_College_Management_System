@@ -2,8 +2,10 @@ server:
   port: 9090
   
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
-    name: API-GATEWAY-MICROSERVICE
+    name: APPLICATION-GATEWAY-MICROSERVICE
     
   cloud:
     gateway:

@@ -7,9 +7,9 @@ public interface CollegeDepartmentService {
 
 	ResponseBodyEntity saveDepartment(CollegeDepartment collegeDepartment)  throws Exception;
 
-	ResponseBodyEntity getDepartmentById(int id) throws Exception;
+	ResponseBodyEntity getDepartmentById(int id, String correlationId) throws Exception;
 	
-	ResponseBodyEntity getAllDepartmentsInfo() throws Exception;
+	ResponseBodyEntity getAllDepartmentsInfo(String correlationId) throws Exception;
 
 	ResponseBodyEntity updateDepartment(CollegeDepartment collegeDepartment) throws Exception;
 
