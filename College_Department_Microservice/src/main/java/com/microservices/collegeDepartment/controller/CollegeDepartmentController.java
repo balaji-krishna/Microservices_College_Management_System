@@ -60,5 +60,11 @@ public class CollegeDepartmentController {
 		LOGGER.info("The api /deleteDepartmentById/{} is called with X-Correlation-Id: {}", id, correlationId);
 		return collegeDepartmentService.deleteDepartmentById(id);
 	}
+	
+	@GetMapping(path = "springProfilesDemo")
+	public String springProfilesDemo(@RequestHeader(value = "X-Correlation-Id") String correlationId) {
+		LOGGER.info("The api /springProfilesDemo is called with X-Correlation-Id: {}", correlationId);
+		return collegeDepartmentService.springProfilesDemo();
+	}
 
 }

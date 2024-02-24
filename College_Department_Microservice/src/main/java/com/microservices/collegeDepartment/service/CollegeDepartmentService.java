@@ -15,4 +15,6 @@ public interface CollegeDepartmentService {
 
 	ResponseBodyEntity deleteDepartmentById(int id) throws Exception;
 
+	String springProfilesDemo();
+
 }
