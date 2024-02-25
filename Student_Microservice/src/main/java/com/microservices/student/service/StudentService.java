@@ -17,4 +17,8 @@ public interface StudentService {
 
 	StudentResponseBody deleteStudentById(int id) throws Exception;
 
+	String aroundAdviceDemo() throws Exception;
+
+	String afterReturnThrowDemo() throws Exception;
+
 }
