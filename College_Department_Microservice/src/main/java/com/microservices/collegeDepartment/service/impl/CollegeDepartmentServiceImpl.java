@@ -5,7 +5,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -37,9 +36,6 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	public static final String COLLEGE_DEPT_SERVICE = "collegeDeptService";
 
 	public static final String STUDENT_MICROSERVICE_BASE_URL = "http://STUDENT-MICROSERVICE/student/";
-
-	@Value("${profile.demo.message}")
-	public String springProfilesDemo;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -205,11 +201,6 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		}
 		LOGGER.info("The method deleteDepartmentById is successfully completed");
 		return responseBodyEntity;
-	}
-
-	@Override
-	public String springProfilesDemo() {
-		return springProfilesDemo;
 	}
 
 }

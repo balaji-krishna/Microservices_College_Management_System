@@ -1,6 +1,7 @@
 package com.microservices.collegeDepartment.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	private TeachersRepository teachersRepository;
+	
+	@Value("${profile.completion.message}")
+	public String profileCompletionMessage;
 
 	@Override
 	public TeachersResponse getTeacherById(int id) throws Exception {
@@ -26,6 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
 		teachersResponse.setTeachers(teachersRepository.findById(id).get());
 		teachersResponse.setResultCode("01");
 		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
 
@@ -36,6 +41,7 @@ public class TeacherServiceImpl implements TeacherService {
 			teachersResponse.setTeachersList(teachersRepository.findAll());
 			teachersResponse.setResultCode("01");
 			teachersResponse.setResultMessage("Successfully completed");
+			teachersResponse.setProfileName(profileCompletionMessage);
 		} catch (Exception e) {
 			throw new BusinessException("Exception occurred");
 		}
@@ -53,6 +59,7 @@ public class TeacherServiceImpl implements TeacherService {
 		teachersResponse.setTeachersList(teachersRepository.findAll());
 		teachersResponse.setResultCode("01");
 		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
 
@@ -66,6 +73,7 @@ public class TeacherServiceImpl implements TeacherService {
 		teachersResponse.setTeachers(teachersRepository.save(teachers));
 		teachersResponse.setResultCode("01");
 		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
 
@@ -79,6 +87,7 @@ public class TeacherServiceImpl implements TeacherService {
 		teachersResponse.setTeachers(teachersRepository.save(teachers));
 		teachersResponse.setResultCode("01");
 		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
 
