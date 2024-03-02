@@ -67,19 +67,5 @@ public class StudentController {
 		LOGGER.info("The api /deleteStudentById/{} is called with X-Correlation-Id: {}", id, correlationId);
 		return studentService.deleteStudentById(id);
 	}
-	
-	@GetMapping(path = "aroundAdviceDemo")
-	public String aroundAdviceDemo(@RequestHeader(value = "X-Correlation-Id") String correlationId)
-			throws Exception {
-		LOGGER.info("The api /aroundAdviceDemo is called with X-Correlation-Id: {}", correlationId);
-		return studentService.aroundAdviceDemo();
-	}
-	
-	@GetMapping(path = "afterReturnThrowDemo")
-	public String afterReturnThrowDemo(@RequestHeader(value = "X-Correlation-Id") String correlationId)
-			throws Exception {
-		LOGGER.info("The api /afterReturnThrowDemo is called with X-Correlation-Id: {}", correlationId);
-		return studentService.afterReturnThrowDemo();
-	}
 
 }

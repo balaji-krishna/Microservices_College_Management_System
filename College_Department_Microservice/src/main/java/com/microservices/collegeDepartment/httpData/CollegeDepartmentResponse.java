@@ -32,10 +32,6 @@ public class CollegeDepartmentResponse {
 		this.students = students;
 	}
 
-	public CollegeDepartmentResponse() {
-		super();
-	}
-
 	public List<CollegeDepartment> getCollegeDepartments() {
 		return collegeDepartments;
 	}
@@ -52,10 +48,14 @@ public class CollegeDepartmentResponse {
 		this.collegeDepartments = collegeDepartments;
 	}
 
+	public CollegeDepartmentResponse() {
+		super();
+	}
+
 	@Override
 	public String toString() {
 		return "CollegeDepartmentResponse [collegeDepartment=" + collegeDepartment + ", students=" + students
-				+ ", collegeDepartments=" + collegeDepartments + "]";
+				+ ", collegeDepartments=" + collegeDepartments + "" + "]";
 	}
 
 }

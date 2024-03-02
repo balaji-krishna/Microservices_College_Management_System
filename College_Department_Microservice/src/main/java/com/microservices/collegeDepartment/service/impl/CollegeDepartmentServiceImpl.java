@@ -37,7 +37,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	public static final String COLLEGE_DEPT_SERVICE = "collegeDeptService";
 
 	public static final String STUDENT_MICROSERVICE_BASE_URL = "http://STUDENT-MICROSERVICE/student/";
-	
+
 	@Value("${profile.demo.message}")
 	public String springProfilesDemo;
 
@@ -128,9 +128,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("X-Correlation-Id", correlationId);
-		
+
 		HttpEntity request = new HttpEntity(headers);
-		
+
 		studentResponseBody = restTemplate.exchange(STUDENT_MICROSERVICE_BASE_URL + "getAllStudentsInfo",
 				HttpMethod.GET, request, StudentResponseBody.class).getBody();
 

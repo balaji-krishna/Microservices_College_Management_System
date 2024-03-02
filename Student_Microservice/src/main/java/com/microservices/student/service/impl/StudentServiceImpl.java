@@ -119,24 +119,4 @@ public class StudentServiceImpl implements StudentService {
 		return studentResponseBody;
 	}
 
-	@Override
-	public String aroundAdviceDemo() throws Exception {
-		try {
-			return "AROUND_ADVICE_DEMO";
-		} catch (Exception e) {
-			throw new Exception();
-		}
-	}
-
-	@Override
-	public String afterReturnThrowDemo() throws Exception {
-		try {
-			return "After_Return_demo";
-		} catch (Exception e) {
-			throw new Exception();
-		}
-	}
-	
-	
-
 }

@@ -20,6 +20,10 @@ public class ActuatorSecurityConfig {
 					.requestMatchers(HttpMethod.POST ,"/department/**").permitAll()
 					.requestMatchers(HttpMethod.PUT ,"/department/**").permitAll()
 					.requestMatchers(HttpMethod.DELETE ,"/department/**").permitAll()
+					.requestMatchers(HttpMethod.GET ,"/teacher/**").permitAll()
+					.requestMatchers(HttpMethod.POST ,"/teacher/**").permitAll()
+					.requestMatchers(HttpMethod.PUT ,"/teacher/**").permitAll()
+					.requestMatchers(HttpMethod.DELETE ,"/teacher/**").permitAll()
  					.requestMatchers("/actuator/**").hasRole("ADMIN")
  			).csrf().disable()
  			.formLogin();
