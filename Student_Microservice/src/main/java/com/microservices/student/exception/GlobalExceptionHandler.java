@@ -7,6 +7,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.microservices.student.constant.ApplicationConstant;
 import com.microservices.student.httpData.StudentResponseBody;
 
 @ControllerAdvice
@@ -15,7 +16,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({BusinessException.class})
 	public ResponseEntity<StudentResponseBody> businessException(BusinessException exception) {
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
-		studentResponseBody.setResultCode("-1");
+		studentResponseBody.setResultCode(ApplicationConstant.EXCEPTION_RESULT_CODE);
 		studentResponseBody.setResultMessage(exception.getMessage());
 		return new ResponseEntity<>(studentResponseBody, HttpStatus.OK);
 	}
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({RuntimeException.class})
 	public ResponseEntity<StudentResponseBody> runTimeException(RuntimeException exception) {
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
-		studentResponseBody.setResultCode("-1");
+		studentResponseBody.setResultCode(ApplicationConstant.EXCEPTION_RESULT_CODE);
 		studentResponseBody.setResultMessage(exception.getMessage());
 		return new ResponseEntity<>(studentResponseBody, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -31,7 +32,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({HttpRequestMethodNotSupportedException.class})
 	public ResponseEntity<StudentResponseBody> notFoundException(HttpRequestMethodNotSupportedException exception) {
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
-		studentResponseBody.setResultCode("-1");
+		studentResponseBody.setResultCode(ApplicationConstant.EXCEPTION_RESULT_CODE);
 		studentResponseBody.setResultMessage(exception.getMessage());
 		return new ResponseEntity<>(studentResponseBody, HttpStatus.METHOD_NOT_ALLOWED);
 	}
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({HttpMediaTypeException.class})
 	public ResponseEntity<StudentResponseBody> methodNotAllowedException(HttpMediaTypeException exception) {
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
-		studentResponseBody.setResultCode("-1");
+		studentResponseBody.setResultCode(ApplicationConstant.EXCEPTION_RESULT_CODE);
 		studentResponseBody.setResultMessage(exception.getMessage());
 		return new ResponseEntity<>(studentResponseBody, HttpStatus.METHOD_NOT_ALLOWED);
 	}

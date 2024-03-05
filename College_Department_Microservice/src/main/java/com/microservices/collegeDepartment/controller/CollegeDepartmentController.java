@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.microservices.collegeDepartment.constant.ApplicationConstant;
 import com.microservices.collegeDepartment.entity.CollegeDepartment;
 import com.microservices.collegeDepartment.model.ResponseBodyEntity;
 import com.microservices.collegeDepartment.service.CollegeDepartmentService;
@@ -27,7 +28,7 @@ public class CollegeDepartmentController {
 	private CollegeDepartmentService collegeDepartmentService;
 
 	@GetMapping(path = "getAllDepartmentsInfo")
-	public ResponseBodyEntity getAllDepartmentsInfo(@RequestHeader(value = "X-Correlation-Id") String correlationId)
+	public ResponseBodyEntity getAllDepartmentsInfo(@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId)
 			throws Exception {
 		LOGGER.info("The api /getAllDepartmentsInfo is called with X-Correlation-Id: {}", correlationId);
 		return collegeDepartmentService.getAllDepartmentsInfo(correlationId);
@@ -35,28 +36,28 @@ public class CollegeDepartmentController {
 
 	@GetMapping(path = "getDepartmentById/{id}")
 	public ResponseBodyEntity getDepartmentById(@PathVariable int id,
-			@RequestHeader(value = "X-Correlation-Id") String correlationId) throws Exception {
+			@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId) throws Exception {
 		LOGGER.info("The api /getDepartmentById/{} is called with X-Correlation-Id: {}", id, correlationId);
 		return collegeDepartmentService.getDepartmentById(id, correlationId);
 	}
 
 	@PostMapping(path = "saveDepartment")
 	public ResponseBodyEntity saveDepartment(@RequestBody CollegeDepartment collegeDepartment,
-			@RequestHeader(value = "X-Correlation-Id") String correlationId) throws Exception {
+			@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId) throws Exception {
 		LOGGER.info("The api /saveDepartment is called with X-Correlation-Id: {}", correlationId);
 		return collegeDepartmentService.saveDepartment(collegeDepartment);
 	}
 
 	@PutMapping(path = "updateDepartment")
 	public ResponseBodyEntity updateDepartment(@RequestBody CollegeDepartment collegeDepartment,
-			@RequestHeader(value = "X-Correlation-Id") String correlationId) throws Exception {
+			@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId) throws Exception {
 		LOGGER.info("The api /updateDepartment is called with X-Correlation-Id: {}", correlationId);
 		return collegeDepartmentService.updateDepartment(collegeDepartment);
 	}
 
 	@DeleteMapping(path = "deleteDepartmentById/{id}")
 	public ResponseBodyEntity deleteDepartmentById(@PathVariable int id,
-			@RequestHeader(value = "X-Correlation-Id") String correlationId) throws Exception {
+			@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId) throws Exception {
 		LOGGER.info("The api /deleteDepartmentById/{} is called with X-Correlation-Id: {}", id, correlationId);
 		return collegeDepartmentService.deleteDepartmentById(id);
 	}

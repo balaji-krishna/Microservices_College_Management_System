@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.microservices.collegeDepartment.constant.ApplicationConstant;
 import com.microservices.collegeDepartment.entity.Teachers;
 import com.microservices.collegeDepartment.exception.BusinessException;
 import com.microservices.collegeDepartment.httpData.TeachersResponse;
@@ -28,8 +29,8 @@ public class TeacherServiceImpl implements TeacherService {
 			throw new BusinessException("Teacher Id does not exists!!");
 		}
 		teachersResponse.setTeachers(teachersRepository.findById(id).get());
-		teachersResponse.setResultCode("01");
-		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
@@ -39,8 +40,8 @@ public class TeacherServiceImpl implements TeacherService {
 		TeachersResponse teachersResponse = new TeachersResponse();
 		try {
 			teachersResponse.setTeachersList(teachersRepository.findAll());
-			teachersResponse.setResultCode("01");
-			teachersResponse.setResultMessage("Successfully completed");
+			teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+			teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 			teachersResponse.setProfileName(profileCompletionMessage);
 		} catch (Exception e) {
 			throw new BusinessException("Exception occurred");
@@ -57,8 +58,8 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		teachersRepository.deleteById(id);
 		teachersResponse.setTeachersList(teachersRepository.findAll());
-		teachersResponse.setResultCode("01");
-		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
@@ -71,8 +72,8 @@ public class TeacherServiceImpl implements TeacherService {
 			throw new BusinessException("Teacher Id does not exists!!");
 		}
 		teachersResponse.setTeachers(teachersRepository.save(teachers));
-		teachersResponse.setResultCode("01");
-		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
@@ -85,8 +86,8 @@ public class TeacherServiceImpl implements TeacherService {
 			throw new BusinessException("Teacher Id already exists!!");
 		}
 		teachersResponse.setTeachers(teachersRepository.save(teachers));
-		teachersResponse.setResultCode("01");
-		teachersResponse.setResultMessage("Successfully completed");
+		teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}

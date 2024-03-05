@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.microservices.student.constant.ApplicationConstant;
 import com.microservices.student.entity.Student;
 import com.microservices.student.exception.BusinessException;
 import com.microservices.student.httpData.StudentResponseBody;
@@ -36,8 +37,8 @@ public class StudentServiceImpl implements StudentService {
 			throw new BusinessException("Student Id does not exists!!");
 		}
 		studentResponseBody.setStudent(studentRepository.findById(id).get());
-		studentResponseBody.setResultCode("01");
-		studentResponseBody.setResultMessage("Successfully completed");
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method getStudentById is successfully completed");
 		return studentResponseBody;
 	}
@@ -48,8 +49,8 @@ public class StudentServiceImpl implements StudentService {
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
 		try {
 			studentResponseBody.setStudents(studentRepository.findAll());
-			studentResponseBody.setResultCode("01");
-			studentResponseBody.setResultMessage("Successfully completed");
+			studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+			studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		} catch (Exception e) {
 			throw new BusinessException("Exception occurred");
 		}
@@ -66,8 +67,8 @@ public class StudentServiceImpl implements StudentService {
 			throw new BusinessException("Student Id already exists!!");
 		}
 		studentResponseBody.setStudent(studentRepository.save(student));
-		studentResponseBody.setResultCode("01");
-		studentResponseBody.setResultMessage("Successfully completed");
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method saveStudent is successfully completed");
 		return studentResponseBody;
 	}
@@ -86,8 +87,8 @@ public class StudentServiceImpl implements StudentService {
 			throw new BusinessException("Department Id does not exists!!");
 		}
 		studentResponseBody.setStudents(studentRepository.getStudentByDepartmentId(id));
-		studentResponseBody.setResultCode("01");
-		studentResponseBody.setResultMessage("Successfully completed");
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method getStudentByDepartmentId is successfully completed");
 		return studentResponseBody;
 	}
@@ -102,8 +103,8 @@ public class StudentServiceImpl implements StudentService {
 			throw new BusinessException("Student Id does not exists!!");
 		}
 		studentResponseBody.setStudent(studentRepository.save(student));
-		studentResponseBody.setResultCode("01");
-		studentResponseBody.setResultMessage("Successfully completed");
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method updateStudent is successfully completed");
 		return studentResponseBody;
 	}
@@ -119,8 +120,8 @@ public class StudentServiceImpl implements StudentService {
 		}
 		studentRepository.deleteById(id);
 		studentResponseBody.setStudents(studentRepository.findAll());
-		studentResponseBody.setResultCode("01");
-		studentResponseBody.setResultMessage("Successfully completed");
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method deleteStudentById is successfully completed");
 		return studentResponseBody;
 	}
