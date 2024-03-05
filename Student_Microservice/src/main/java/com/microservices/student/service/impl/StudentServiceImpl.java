@@ -6,6 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,7 @@ public class StudentServiceImpl implements StudentService {
 	private StudentRepository studentRepository;
 
 	@Override
+	@Cacheable(cacheNames = "studentById_cache", key = "#id")
 	public StudentResponseBody getStudentById(int id) throws Exception {
 		LOGGER.info("The method getStudentById is called with id {}", id);
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -90,6 +94,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+	@CachePut(cacheNames = "studentById_cache", key = "#student.id")
 	public StudentResponseBody updateStudent(Student student) throws Exception {
 		LOGGER.info("The method updateStudent is called with id {}", student.getId());
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
@@ -105,6 +110,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "studentById_cache", key = "#id")
 	public StudentResponseBody deleteStudentById(int id) throws Exception {
 		LOGGER.info("The method deleteStudentById is called with id {}", id);
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
