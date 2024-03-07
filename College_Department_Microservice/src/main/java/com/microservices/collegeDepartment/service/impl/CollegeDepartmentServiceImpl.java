@@ -1,10 +1,12 @@
 package com.microservices.collegeDepartment.service.impl;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -37,6 +39,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	public static final String COLLEGE_DEPT_SERVICE = "collegeDeptService";
 
 	public static final String STUDENT_MICROSERVICE_BASE_URL = "http://STUDENT-MICROSERVICE/student/";
+	
+	@Value("${student.basic.auth}")
+	private String studentBasicAuth;
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -75,7 +80,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("X-Correlation-Id", correlationId);
+		headers.set(ApplicationConstant.X_CORRELATION_ID, correlationId);
+		String base64Creds = Base64.getEncoder().encodeToString(studentBasicAuth.getBytes());
+		headers.add(ApplicationConstant.AUTHORIZATION, ApplicationConstant.BASIC + base64Creds);
 
 		HttpEntity request = new HttpEntity(headers);
 
@@ -97,6 +104,7 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	}
 
 	public ResponseBodyEntity getDepartmentByIdFallback(int id, String correlationId, RestClientException exception) {
+		System.out.println(exception.getMessage());
 		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
 		LOGGER.info("The method getDepartmentByIdFallback is called with id {}", id);
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
@@ -124,7 +132,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 
 		LOGGER.info("THE STUDENT MICROSERVICE IS CALLED");
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("X-Correlation-Id", correlationId);
+		headers.set(ApplicationConstant.X_CORRELATION_ID, correlationId);
+		String base64Creds = Base64.getEncoder().encodeToString(studentBasicAuth.getBytes());
+		headers.add(ApplicationConstant.AUTHORIZATION, ApplicationConstant.BASIC + base64Creds);
 
 		HttpEntity request = new HttpEntity(headers);
 
