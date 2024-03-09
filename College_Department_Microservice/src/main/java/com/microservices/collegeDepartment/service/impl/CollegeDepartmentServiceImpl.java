@@ -59,9 +59,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
 		responseBodyEntity.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
-		if (responseBodyEntity.getResultCode().equals("01")) {
-			throw new BusinessException("Test exception");
-		}
+//		if (responseBodyEntity.getResultCode().equals("01")) {
+//			throw new BusinessException("Test exception");
+//		}
 		LOGGER.info("The method saveDepartment is successfully completed");
 		return responseBodyEntity;
 	}
@@ -104,7 +104,6 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 	}
 
 	public ResponseBodyEntity getDepartmentByIdFallback(int id, String correlationId, RestClientException exception) {
-		System.out.println(exception.getMessage());
 		LOGGER.info("THE STUDENT MICROSERVICE IS DOWN");
 		LOGGER.info("The method getDepartmentByIdFallback is called with id {}", id);
 		ResponseBodyEntity responseBodyEntity = new ResponseBodyEntity();
@@ -185,9 +184,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
 		responseBodyEntity.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
-		if (responseBodyEntity.getResultCode().equals(ApplicationConstant.SUCCESS_RESULT_CODE)) {
-			throw new BusinessException("Test exception");
-		}
+//		if (responseBodyEntity.getResultCode().equals(ApplicationConstant.SUCCESS_RESULT_CODE)) {
+//			throw new BusinessException("Test exception");
+//		}
 		LOGGER.info("The method updateDepartment is successfully completed");
 		return responseBodyEntity;
 	}
@@ -207,9 +206,9 @@ public class CollegeDepartmentServiceImpl implements CollegeDepartmentService {
 		responseBodyEntity.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
 		responseBodyEntity.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		responseBodyEntity.setCollegeDepartmentResponse(collegeDepartmentResponse);
-		if (responseBodyEntity.getResultCode().equals(ApplicationConstant.SUCCESS_RESULT_CODE)) {
-			throw new BusinessException("Test exception");
-		}
+//		if (responseBodyEntity.getResultCode().equals(ApplicationConstant.SUCCESS_RESULT_CODE)) {
+//			throw new BusinessException("Test exception");
+//		}
 		LOGGER.info("The method deleteDepartmentById is successfully completed");
 		return responseBodyEntity;
 	}
