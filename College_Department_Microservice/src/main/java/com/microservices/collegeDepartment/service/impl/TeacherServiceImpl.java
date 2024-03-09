@@ -18,7 +18,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	private TeachersRepository teachersRepository;
-	
+
 	@Value("${profile.completion.message}")
 	public String profileCompletionMessage;
 
@@ -36,16 +36,12 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public TeachersResponse getAllTeachersInfo() throws Exception {
+	public TeachersResponse getAllTeachersInfo() {
 		TeachersResponse teachersResponse = new TeachersResponse();
-		try {
-			teachersResponse.setTeachersList(teachersRepository.findAll());
-			teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
-			teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
-			teachersResponse.setProfileName(profileCompletionMessage);
-		} catch (Exception e) {
-			throw new BusinessException("Exception occurred");
-		}
+		teachersResponse.setTeachersList(teachersRepository.findAll());
+		teachersResponse.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		teachersResponse.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
+		teachersResponse.setProfileName(profileCompletionMessage);
 		return teachersResponse;
 	}
 
