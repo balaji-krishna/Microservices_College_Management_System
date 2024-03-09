@@ -22,7 +22,7 @@ import com.microservices.student.service.StudentService;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(StudentServiceImpl.class);
 
 	@Autowired
@@ -44,16 +44,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public StudentResponseBody getAllStudentsInfo() throws Exception {
+	public StudentResponseBody getAllStudentsInfo() {
 		LOGGER.info("The method getAllStudentsInfo is called");
 		StudentResponseBody studentResponseBody = new StudentResponseBody();
-		try {
-			studentResponseBody.setStudents(studentRepository.findAll());
-			studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
-			studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
-		} catch (Exception e) {
-			throw new BusinessException("Exception occurred");
-		}
+		studentResponseBody.setStudents(studentRepository.findAll());
+		studentResponseBody.setResultCode(ApplicationConstant.SUCCESS_RESULT_CODE);
+		studentResponseBody.setResultMessage(ApplicationConstant.SUCCESSFULLY_COMPLETED);
 		LOGGER.info("The method getAllStudentsInfo is successfully completed");
 		return studentResponseBody;
 	}

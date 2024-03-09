@@ -28,8 +28,7 @@ public class StudentController {
 	private StudentService studentService;
 
 	@GetMapping(path = "getAllStudentsInfo")
-	public StudentResponseBody getAllStudentsInfo(@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId)
-			throws Exception {
+	public StudentResponseBody getAllStudentsInfo(@RequestHeader(value = ApplicationConstant.X_CORRELATION_ID) String correlationId) {
 		LOGGER.info("The api /getAllStudentsInfo is called with X-Correlation-Id: {}", correlationId);
 		return studentService.getAllStudentsInfo();
 	}

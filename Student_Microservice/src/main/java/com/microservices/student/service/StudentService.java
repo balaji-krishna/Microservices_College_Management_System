@@ -7,7 +7,7 @@ public interface StudentService {
 
 	StudentResponseBody getStudentById(int id) throws Exception;
 
-	StudentResponseBody getAllStudentsInfo() throws Exception;
+	StudentResponseBody getAllStudentsInfo();
 
 	StudentResponseBody saveStudent(Student student) throws Exception;
 
