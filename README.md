@@ -39,4 +39,5 @@ Spring boot Microservices features covered in this project are:
 Below is the architecture of this college management system.
 
 
-![College management system architecture Microservices](https://github.com/balaji-krishna/Microservices_College_Management_System/assets/126441628/0a3cc3b0-b3a5-4317-90d0-4eb34933e714)
+
+![College management system architecture Microservices](https://github.com/balaji-krishna/Microservices_College_Management_System/assets/126441628/7330f040-2a90-4dbf-b075-67249cfad707)
