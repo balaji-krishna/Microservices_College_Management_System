@@ -35,3 +35,8 @@ Spring boot Microservices features covered in this project are:
 15. Actuator implementation.
 16. Logging the unique correlation id for each requests.
 17. Defining constants for code optimization and reusability.
+
+Below is the architecture of this college management system.
+
+
+![College management system architecture Microservices](https://github.com/balaji-krishna/Microservices_College_Management_System/assets/126441628/0a3cc3b0-b3a5-4317-90d0-4eb34933e714)
